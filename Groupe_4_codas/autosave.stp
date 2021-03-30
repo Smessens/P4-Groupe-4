@@ -1,0 +1,324 @@
+[Codamotion]
+Version=6.79.3-CX1/MPX30
+ClinicalGait=1
+FreestyleGait=1
+
+[Information]
+DataDirectory=C:\Documents and Settings\DEFAULT\Desktop\GBIO_2021
+StpDirectory=C:\Documents and Settings\DEFAULT\Desktop\GBIO_2021
+Date=010101
+Time=0332
+
+[CODA]
+Number=1
+Configuration=0
+Active=1,0,0,0,0,0,0,0
+ExtSync=1
+NumberForce=0
+ActiveForce=0,0,0,0,0
+NumberADC=0
+ActiveADC=0
+AlignmentMarkersA=10,11,10,9,10,0,0
+AlignmentMarkersB=0,0,0,0,0,0,0
+AlignmentOptions=1,0,0,0,0,0,0,0
+AlignmentParameters=0.0,0.0,0.0,0.0,0.0,0.0
+OriginOffset=0,0.0,0.0,0.0
+
+[AppOptions]
+NoStartMaximized=0
+ConfirmExit=1
+SetupsWithDatafiles=1
+AutoLoadSetup=1
+ActivityLogging=1
+WalkwayAlongYaxis=0
+AcquisitionPreStrobe=0
+AutoCalMpx=1
+FPlateCOPCorrection=0
+FPlateAutoOffset=1
+FPlateValidThreshold=10
+SaveAutoCalMpxFile=0
+AutoSaveTextFile=1
+SaveTextInViewFlags=1
+AutoClose=1
+AutoSummary=1
+AutoShowConfig=0
+AutoShowInView=1
+AutoZoom=0
+AutoComments=1
+AutoExportConfirm=0
+NoWarnOrigin=0
+NoConfirmInit=0
+NoRestoreOrConfirmConfig=0
+RemoteConrol=0
+AnimationTimer=50
+StickfigGreyOut=1
+AssumeColourPrinter=0
+GaitColoursLR=1
+NoAcquisitionBeeps=0
+Kistler5233Aversion=0
+
+[Acquisition]
+Markers=8-17
+AutoStart=
+Options=43.700001,0,0,0,200,0,0,0,800,28,0,0,0,0,0,0,0,0,0,0,0,0,0
+ExtSyncFreq=0
+Transform=CodaAlignment
+ADCchannels=FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF
+ADCrates=1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000
+ForceOptions=0,0,3,3,0
+EMGOptions=0,1
+ADCOptions=0,0,0
+
+[AcqModeSetup]
+Mode=1
+Marker=1
+CorrelParams=0.980,0.900,3974
+ISensitivity=1.000
+
+[MultiAcquisition]
+FilenamePrefix=SophieEBR_
+FilenameExtn=MDF
+FilenameNum=1
+StopNum=9999
+Showtime=5
+Options=0,0,0,1,0,1
+
+[Triggers]
+Number=2
+Channl0=0
+Marker0=0
+TrigXYZ0=1,0,0
+Threshold0=0.0,0.0,0.0
+EnableDelay0=0,0
+Delay0=0
+SingleShot0=0
+Channl1=1
+Marker1=0
+TrigXYZ1=0,0,1
+Threshold1=0.0,0.0,0.0
+EnableDelay1=0,0
+Delay1=0
+SingleShot1=0
+
+[RealTimeStickFigure]
+ViewLimitsX=-250, 250
+ViewLimitsY=-1500, 1500
+ViewLimitsZ=0, 340
+ViewOptions=1, 0, 1, 1, 0
+
+[Markers]
+Number=56
+Name0=Marker 1
+Col0=255,0,0
+Name1=Marker 2
+Col1=255,255,0
+Name2=Marker 3
+Col2=0,255,0
+Name3=Marker 4
+Col3=0,255,255
+Name4=Marker 5
+Col4=255,128,0
+Name5=Marker 6
+Col5=128,128,0
+Name6=Marker 7
+Col6=255,0,255
+Name7=Marker 8
+Col7=0,128,255
+Name8=Marker 9
+Col8=255,0,0
+Name9=Marker 10
+Col9=255,255,0
+Name10=Marker 11
+Col10=0,255,0
+Name11=Marker 12
+Col11=0,255,255
+Name12=Marker 13
+Col12=255,128,0
+Name13=Marker 14
+Col13=128,128,0
+Name14=Marker 15
+Col14=255,0,255
+Name15=Marker 16
+Col15=0,128,255
+Name16=Marker 17
+Col16=255,0,0
+Name17=Marker 18
+Col17=255,255,0
+Name18=Marker 19
+Col18=0,255,0
+Name19=Marker 20
+Col19=0,255,255
+Name20=Marker 21
+Col20=255,128,0
+Name21=Marker 22
+Col21=128,128,0
+Name22=Marker 23
+Col22=255,0,255
+Name23=Marker 24
+Col23=0,128,255
+Name24=Marker 25
+Col24=255,0,0
+Name25=Marker 26
+Col25=255,255,0
+Name26=Marker 27
+Col26=0,255,0
+Name27=Marker 28
+Col27=0,255,255
+Name28=Marker 29
+Col28=255,128,0
+Name29=Marker 30
+Col29=128,128,0
+Name30=Marker 31
+Col30=255,0,255
+Name31=Marker 32
+Col31=0,128,255
+Name32=Marker 33
+Col32=255,0,0
+Name33=Marker 34
+Col33=255,255,0
+Name34=Marker 35
+Col34=0,255,0
+Name35=Marker 36
+Col35=0,255,255
+Name36=Marker 37
+Col36=255,128,0
+Name37=Marker 38
+Col37=128,128,0
+Name38=Marker 39
+Col38=255,0,255
+Name39=Marker 40
+Col39=0,128,255
+Name40=Marker 41
+Col40=255,0,0
+Name41=Marker 42
+Col41=255,255,0
+Name42=Marker 43
+Col42=0,255,0
+Name43=Marker 44
+Col43=0,255,255
+Name44=Marker 45
+Col44=255,128,0
+Name45=Marker 46
+Col45=128,128,0
+Name46=Marker 47
+Col46=255,0,255
+Name47=Marker 48
+Col47=0,128,255
+Name48=Marker 49
+Col48=255,0,0
+Name49=Marker 50
+Col49=255,255,0
+Name50=Marker 51
+Col50=0,255,0
+Name51=Marker 52
+Col51=0,255,255
+Name52=Marker 53
+Col52=255,128,0
+Name53=Marker 54
+Col53=128,128,0
+Name54=Marker 55
+Col54=255,0,255
+Name55=Marker 56
+Col55=0,128,255
+
+[Force]
+
+[EMG]
+
+[Digital]
+
+[Virtual Markers]
+Number=0
+
+[Rigid Bodies]
+Number=0
+
+[Joint Angles]
+Number=0
+
+[Vector Angles]
+Number=0
+
+[Filters]
+Filtering=1
+Interpolation=1
+EpochInterpolation=1
+MarkerDeSkew=1
+Marker X=100
+Marker Y=100
+Marker Z=100
+Velocity=20
+Acceleration=20
+Angle=50
+Force=100
+RealTimeMarkers=10
+ADCEMGFiltering=0
+ADCEMG_Filtering=0,0,0,0,0,0,0,0,0,0,0,0
+ADCEMG_Deglitch=0,0,0,0,0,0,0,0,0,0,0,0
+ADCEMG_AutoOffset=0,0,0,0,0,0,0,0,0,0,0,0
+ADCEMG_Rectify=0,0,0,0,0,0,0,0,0,0,0,0
+ADCEMG_FilterWidth=2,2,2,2,2,2,2,2,2,2,2,2
+ForceFiltering=0
+Force_PlateType=0,0,0,0,0
+Force_Filtering=0,0,0,0,0
+Force_AutoOffset=0,0,0,0,0
+Force_CutoffFreq=200,200,200,200,200
+
+[FileOptions]
+SaveAcqData=1,1,0,0,0
+SaveCalcData=0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+SaveZoomedOnly=0
+SaveNSamples=0,100
+SaveTextHeader=1
+SaveTextSampleNum=0
+
+[DataTransform]
+Active=0,0
+Axes=0,1
+Markers=0,0,1,0,2
+OffsetRotns=0.000,0.000,0.000
+OffsetRotnAxes=0,1,2
+Offset=0,0,0
+FilterFactor=1.000
+
+[StickFigures]
+Number=9
+Join0=4,5,1
+Join1=6,7,1
+Join2=7,8,1
+Join3=9,10,1
+Join4=9,11,1
+Join5=10,11,1
+Join6=12,13,1
+Join7=14,15,1
+Join8=15,16,1
+
+[StickFiguresForce]
+Number=0
+
+[Variables]
+Number=0
+
+[Video Capture]
+Enable=0
+CaptureDevice=0
+FrameRate=10.00
+Compressor=
+Quality=0
+KeyFrameEvery=1
+SaveAsAVI=0
+DefaultOffset=0.000
+RateScale=0.840
+
+[Graphs]
+Number=0
+
+[2DViews]
+Number=0
+
+[TextViews]
+
+[VideoViews]
+Number=0
+
+[End]
