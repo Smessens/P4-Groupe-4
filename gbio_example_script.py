@@ -200,7 +200,7 @@ for s in subjects:
                     yL[i]=LF[segmentations[e]+i]
                     yG[i]=GF[segmentations[e]+i]
                     yd[i]=dGF[segmentations[e]+i]       
-            if(down):
+            if(down):#old  verssion
                 print(yaB)
                 ax[0][0].plot(x[:le], yaB[:le],color=(0.75,((30-e)/30),(30-e)/30))
                 ax[1][0].plot(x[:le], yLB[:le],color=(0.75,((30-e)/30),(30-e)/30))
