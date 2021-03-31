@@ -178,6 +178,18 @@ for s in subjects:
         
         down=True
         
+        arra=np.full(xnum,0).astype(float)
+        arrL=np.full(xnum,0).astype(float)
+        arrd=np.full(xnum,0).astype(float)
+        arrG=np.full(xnum,0).astype(float)
+
+        arraB=np.full(xnum,0).astype(float)
+        arrLB=np.full(xnum,0).astype(float)
+        arrdB=np.full(xnum,0).astype(float)
+        arrGB=np.full(xnum,0).astype(float)
+        lemin=10000
+        leminb=10000
+        
 
         for e in range (len(segmentations)-1):
             ya=np.full(xnum,0).astype(float)
@@ -188,7 +200,8 @@ for s in subjects:
             ydB=np.full(xnum,0).astype(float)
             yG=np.full(xnum,0).astype(float)
             yGB=np.full(xnum,0).astype(float)
-            le=int(segmentations[e+1]-segmentations[e])
+
+            le=int(segmentations[e+1]-segmentations[e]) 
             for i in range (int(segmentations[e+1]-segmentations[e])):
                 if(down):
                     yaB[i]=accX[(segmentations[e]+i)]
@@ -200,19 +213,45 @@ for s in subjects:
                     yL[i]=LF[segmentations[e]+i]
                     yG[i]=GF[segmentations[e]+i]
                     yd[i]=dGF[segmentations[e]+i]       
-            if(down):#old  verssion
-                print(yaB)
-                ax[0][0].plot(x[:le], yaB[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[1][0].plot(x[:le], yLB[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[2][0].plot(x[:le], yGB[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[3][0].plot(x[:le], ydB[:le],color=(0.75,((30-e)/30),(30-e)/30))
+            if(down):
+                ax[0][0].plot(x[:le], yaB[:le],color=(0.8,0.8,0.8))
+                ax[1][0].plot(x[:le], yLB[:le],color=(0.8,0.8,0.8))
+                ax[2][0].plot(x[:le], yGB[:le],color=(0.8,0.8,0.8))
+                ax[3][0].plot(x[:le], ydB[:le],color=(0.8,0.8,0.8))
                 down=False
+                if(leminb>le):leminb=le
+                for i in range (le):
+                    
+                    arraB[i]+=yaB[i]/10
+                    arrLB[i]+=yLB[i]/10
+                    arrdB[i]+=ydB[i]/10
+                    arrGB[i]+=yGB[i]/10
             else:
-                ax[0][1].plot(x[:le], ya[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[1][1].plot(x[:le], yL[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[2][1].plot(x[:le], yG[:le],color=(0.75,((30-e)/30),(30-e)/30))
-                ax[3][1].plot(x[:le], yd[:le],color=(0.75,((30-e)/30),(30-e)/30))
+                ax[0][1].plot(x[:le], ya[:le],color=(0.8,0.8,0.8))
+                ax[1][1].plot(x[:le], yL[:le],color=(0.8,0.8,0.8))
+                ax[2][1].plot(x[:le], yG[:le],color=(0.8,0.8,0.8))
+                ax[3][1].plot(x[:le], yd[:le],color=(0.8,0.8,0.8))
                 down=True
+                if(lemin>le):lemin=le
+                for i in range (le):
+                    
+                    arra[i]+=ya[i]/10
+                    arrL[i]+=yL[i]/10
+                    arrd[i]+=yd[i]/10
+                    arrG[i]+=yG[i]/10
+                    
+            
+                    
+        le=leminb
+        ax[0][0].plot(x[:le], arraB[:le],color=(0,0,0))
+        ax[1][0].plot(x[:le], arrLB[:le],color=(0,0,0))
+        ax[2][0].plot(x[:le], arrGB[:le],color=(0,0,0))
+        ax[3][0].plot(x[:le], arrdB[:le],color=(0,0,0))     
+        le=lemin
+        ax[0][1].plot(x[:le], arra[:le],color=(0,0,0))
+        ax[1][1].plot(x[:le], arrL[:le],color=(0,0,0))
+        ax[2][1].plot(x[:le], arrG[:le],color=(0,0,0))
+        ax[3][1].plot(x[:le], arrd[:le],color=(0,0,0))    
         
         ax[0][0].set_xlabel("Time [iteration]", fontsize=13)
         ax[0][0].set_ylabel("Acceleration [N/s]", fontsize=13)
