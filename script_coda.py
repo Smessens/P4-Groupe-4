@@ -48,106 +48,115 @@ subject_number=0;
 for s in subjects:
     for exp in expe:
         for trial in range(1,ntrials+1): 
-            # Set data path
-            glm_path = "DataGroupe4/%s%s_00%d.glm" % (s,exp,trial)
-            coda_path = "Groupe_4_codas/%s%s_000%d.txt" % (s,exp,trial)
-            name ="%s%s_00%d.glm" % (s,exp,trial)
-    
-            #%% Import data from the files
-            coda_df = coda.import_data(coda_path)
-            glm_df = glm.import_data(glm_path)
-    
-            #%% segmentations
-    
-            segmentations=np.array([])
-            mB0= glm_df['Metronome_b0'].to_numpy()
-            mB1= glm_df['Metronome_b1'].to_numpy()
-            mB2= glm_df['Metronome_b2'].to_numpy()
-            
-            start=4000
-            end=30959
-            mB0=mB0[start:end]
-            mB1=mB1[start:end]
-            mB2=mB2[start:end]
-            bip=False
-    
-            for i in range( len (mB0)):
-                
-                if((mB0[i]+ mB1[i]+mB2[i])!=3 and bip==False ):
-                    segmentations=np.append(segmentations,int((i+start)//4))
-                    bip=True
-                elif(bip and (mB0[i]+mB1[i]+mB2[i])==3 ):
-                    bip=False
-                
-            segmentations=segmentations.astype(int)
+            if("%s%s_00%d" % (s,exp,trial)!="SimonSECV_002" 
+               and "%s%s_00%d" % (s,exp,trial)!="JulienSECV_001"
+               and "%s%s_00%d" % (s,exp,trial)!="SimonEB_002" ):#coumés
+                # Set data path
+                glm_path = "DataGroupe4/%s%s_00%d.glm" % (s,exp,trial)
+                coda_path = "Groupe_4_codas/%s%s_000%d.txt" % (s,exp,trial)
+                name ="%s%s_00%d.glm" % (s,exp,trial)
         
-    
-            
-            
-            #%% Compute the coordinates of the center of the manipulandum 
-            
-            # Markers of the manipulandum (order matters! See doc of manipulandum_center)
-            markers_id = [6,7,8,9] 
-            
-            # Center position
-            pos = coda.manipulandum_center(coda_df,markers_id)
-            pos = pos/1000;
-            
-            # Filter position signal
-            #pos = tool.filter_signal(pos,axis=1,fs=200,fc=10,N=4)
-            
-            # Derive position to get velocity
-            vel = tool.derive(pos,200,axis=1)
+                #%% Import data from the files
+                coda_df = coda.import_data(coda_path)
+                glm_df = glm.import_data(glm_path)
         
+                #%% segmentations
+        
+                segmentations=np.array([])
+                mB0= glm_df['Metronome_b0'].to_numpy()
+                mB1= glm_df['Metronome_b1'].to_numpy()
+                mB2= glm_df['Metronome_b2'].to_numpy()
+                
+                start=4000
+                end=30959
+                mB0=mB0[start:end]
+                mB1=mB1[start:end]
+                mB2=mB2[start:end]
+                bip=False
+        
+                for i in range( len (mB0)):
+                    
+                    if((mB0[i]+ mB1[i]+mB2[i])!=3 and bip==False ):
+                        segmentations=np.append(segmentations,int((i+start)//4))
+                        bip=True
+                    elif(bip and (mB0[i]+mB1[i]+mB2[i])==3 ):
+                        bip=False
+                    
+                segmentations=segmentations.astype(int)
             
-            #%% Basic plot of the data
-            xnum=10000
-            x=np.arange(0,xnum/800,1/800)
+        
+                
+                
+                #%% Compute the coordinates of the center of the manipulandum 
+                
+                # Markers of the manipulandum (order matters! See doc of manipulandum_center)
+                markers_id = [6,7,8,9] 
+                
+                # Center position
+                pos = coda.manipulandum_center(coda_df,markers_id)
+                pos = pos/1000;
+                
+                # Filter position signal
+                #pos = tool.filter_signal(pos,axis=1,fs=200,fc=10,N=4)
+                
+                # Derive position to get velocity
+                vel = tool.derive(pos,200,axis=1)
             
+                
+                #%% Basic plot of the data
+                xnum=10000
+                x=np.arange(0,xnum/800,1/800)
+                
+        
+                
+                down=True
+                
+                arrx=np.full(xnum,0).astype(float)
+                arry=np.full(xnum,0).astype(float)
+                arrz=np.full(xnum,0).astype(float)
+        
+        
+                
+                lemin =1000
+                leminb=10000
+                
+                count=0
+
+                
     
-            
-            down=True
-            
-            arrx=np.full(xnum,0).astype(float)
-            arry=np.full(xnum,0).astype(float)
-            arrz=np.full(xnum,0).astype(float)
-    
-    
-            
-            lemin =1000
-            leminb=10000
-            
-            count=0
-    
-            for e in range (len(segmentations)-1):
-                yx=np.full(xnum,0).astype(float)
-    
-                yxB=np.full(xnum,0).astype(float)
-    
-    
-                le=int(segmentations[e+1]-segmentations[e]) 
-                for i in range (int(segmentations[e+1]-segmentations[e])):
+                for e in range (len(segmentations)-1):
+                    yx=np.full(xnum,0).astype(float)
+        
+                    yxB=np.full(xnum,0).astype(float)
+        
+        
+                    le=int(segmentations[e+1]-segmentations[e]) 
+                    for i in range (int(segmentations[e+1]-segmentations[e])):
+                        if(down):
+                            yxB[i]=pos[0][(segmentations[e]+i)]
+        
+                        else:
+                            yx[i]=pos[0][segmentations[e]+i]
+        
                     if(down):
-                        yxB[i]=pos[0][(segmentations[e]+i)]
+                        master[exp+"D"][master[exp+"Dcount"]]=yxB[:600]
+                        master[exp+"Dcount"]+=1
+        
+                        down=False
     
+                        if(leminb>le):leminb=le
+        
+        
+        
+                            
                     else:
-                        yx[i]=pos[0][segmentations[e]+i]
-    
-                if(down):
-                    master[exp+"D"][master[exp+"Dcount"]]=yxB[:600]
-                    master[exp+"Dcount"]+=1
-    
-                    down=False
-                    if(leminb>le):leminb=le
-    
-    
-    
-                        
-                else:
-                    master[exp][master[exp+"count"]]=yx[:600]
-                    master[exp+"count"]+=1
-                    down=True
-                    if(lemin>le):lemin=le
+                        master[exp][master[exp+"count"]]=yx[:600]
+                        master[exp+"count"]+=1
+                        down=True
+                        if(lemin>le):lemin=le
+
+
+                    
                     
 for exp in expe:
     name = exp+"_"
@@ -160,7 +169,9 @@ for exp in expe:
     le=200                    
     ax[0].set_title("", fontsize=14, fontweight="bold")
     ax[1].set_title("", fontsize=14, fontweight="bold")
-          
+    ax[0].set_ylim([-1,0])
+    ax[1].set_ylim([-1,0])
+
     
         
     arrxB=np.full(xnum,0).astype(float)
@@ -192,6 +203,7 @@ for exp in expe:
             
             
     ax[0].plot(x[:le], arrxB[:le],color=(0,0,0))
+
     #ax[0][0].plot(x[:le], arrxstdB[:le],color=(1,0,0))
     
     ax[1].plot(x[:le], arrx[:le],color=(0,0,0))
