@@ -169,8 +169,10 @@ for s in subjects:
         fig = plt.figure(figsize = [15,7])
         ax  = fig.subplots(4,2)
         fig.suptitle("%s_00%d" % (s,trial))
-        xnum=8000
-        x=np.arange(xnum)
+        xnum=10000
+        x=np.arange(0,xnum/800,1/800)
+        print(x)
+        print(len(x))
         ax[0][0].set_title("GML data per down movements", fontsize=14, fontweight="bold")
         ax[0][1].set_title("GML data per up movements", fontsize=14, fontweight="bold")
         
