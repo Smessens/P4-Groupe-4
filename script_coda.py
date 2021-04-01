@@ -157,7 +157,7 @@ for exp in expe:
     fig.suptitle(exp)
     xnum=10000
     x=np.arange(0,xnum/800,1/800)
-    le=400                    
+    le=200                    
     ax[0].set_title("", fontsize=14, fontweight="bold")
     ax[1].set_title("", fontsize=14, fontweight="bold")
           
