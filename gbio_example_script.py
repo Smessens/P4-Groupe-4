@@ -247,6 +247,7 @@ for s in subjects:
         ax[1][0].plot(x[:le], arrLB[:le],color=(0,0,0))
         ax[2][0].plot(x[:le], arrGB[:le],color=(0,0,0))
         ax[3][0].plot(x[:le], arrdB[:le],color=(0,0,0))     
+        
         le=lemin
         ax[0][1].plot(x[:le], arra[:le],color=(0,0,0))
         ax[1][1].plot(x[:le], arrL[:le],color=(0,0,0))
