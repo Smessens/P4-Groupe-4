@@ -13,34 +13,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 import os
+import coda
+
+from coda import script_coda
+from script_coda import get_segmentations
 
 import glm_data_processing as glm
 import derive as der
-from script_coda  import get_segmentations
 
 # Fermeture des figures ouvertes
 plt.close('all')
 
-#subjects = ["JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF"] #Names of subjects
-#subjects = ["SimonEH","SimonSECV","SimonSECVR","SimonSEFR","SimonSEF"] #Names of subjects
-#Notes  not existant: EB2, EHR
-subjects = ["SophieEB","SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF"] #Names of subjects
-#subjects = ["JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
-#subjects = ["SimonEH","SimonSECV","SimonSECVR","SimonSEFR","SimonSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","SophieEB","SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF","JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
-
-kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
+subjects = ["JulianEB"] #Names of subjects
 ntrials = 2 #Number of trials for each subject
 
-
-
-
-# Double for-loop that runs thrgough all subjects and trials
+# Double for-loop that runs through all subjects and trials
 subject_number=0;
 for s in subjects:
     for trial in range(1,ntrials+1): 
         # Set data path
         glm_path = "DataGroupe4/%s_00%d.glm" % (s,trial)
-
+        
         # Import data 
         glm_df = glm.import_data(glm_path)
         
@@ -93,184 +86,48 @@ for s in subjects:
         dGF=der.derive(GF,800)
         dGF=glm.filter_signal(dGF,   fs = freqAcq, fc = 10)
         
-        name ="%s_00%d.glm" % (s,trial)
-        
-        #%% segmentations
-        segmentations=np.array([])
-        mB0= glm_df['Metronome_b0'].to_numpy()
-        mB1= glm_df['Metronome_b1'].to_numpy()
-        mB2= glm_df['Metronome_b2'].to_numpy()
-        
-        start=4000
-        end=30959
-        mB0=mB0[start:end]
-        mB1=mB1[start:end]
-        mB2=mB2[start:end]
-        bip=False
-
-        for i in range( len (mB0)):
-            
-            if((mB0[i]+ mB1[i]+mB2[i])!=3 and bip==False ):
-                segmentations=np.append(segmentations,int(i+start))
-                bip=True
-            elif(bip and (mB0[i]+mB1[i]+mB2[i])==3 ):
-                bip=False
-            
-        segmentations=segmentations.astype(int)
-        """
-
         #%% Basic plot of the data
         fig = plt.figure(figsize = [15,7])
         ax  = fig.subplots(3,1)
-        fig.suptitle("%s_00%d" % (s,trial))
-
-
-        for i in range(0,len(segmentations)-1):
-                            ax[0].axvline(x=time[int(segmentations[i])])
-
-
-
         
+        segmentations=get_segmentations("DataGroupe4/%s_00%d" % (s,trial))
+        for e in segmentations:
+            ax[0].axvline(time[int(e)])
         
         ax[0].plot(time, accX)
-      #  ax[0].plot(time[ipk],accX[ipk], linestyle='', marker='o', 
-      #             markerfacecolor='None', markeredgecolor='r')
+        ax[0].plot(time[ipk],accX[ipk], linestyle='', marker='o', 
+                   markerfacecolor='None', markeredgecolor='r')
         ax[0].set_ylabel("Acceleration [m/s^2]", fontsize=13)
-        ax[0].set_title("GLM data", fontsize=14, fontweight="bold")
-        ax[0].set_xlim([5,40])
+        ax[0].set_title("Simple example of GLM data", fontsize=14, fontweight="bold")
+        ax[0].set_xlim([0,30])
         
         # Putting grey patches for cycles
-
+        for i in range(0,len(cycle_starts)):
+            rect0=plt.Rectangle((time[cycle_starts[i]],ax[0].get_ylim()[0]),\
+                               time[cycle_ends[i]-cycle_starts[i]],\
+                               ax[0].get_ylim()[1]-ax[0].get_ylim()[0],color='k',alpha=0.3)
+            ax[0].add_patch(rect0)
         
         ax[1].plot(time,LF, label="LF")
         ax[1].plot(time,GF, label="GF")
         ax[1].legend(fontsize=12)
         ax[1].set_xlabel("Time [s]", fontsize=13)
         ax[1].set_ylabel("Forces [N]", fontsize=13)
-        ax[1].set_xlim([5,40])
+        ax[1].set_xlim([0,30])
         
         ax[2].plot(time,dGF)
         ax[2].set_xlabel("Time [s]", fontsize=13)
         ax[2].set_ylabel("GF derivative [N/s]", fontsize=13)
-        ax[2].set_xlim([5,40])
+        ax[2].set_xlim([0,30])
     
         #%% Save the figure as png file. Creates a folder "figures" first if it
         # doesn't exist
         if not os.path.exists('figures'):
             os.makedirs('figures')
         
-        for e in kind:
-            if e  in  name:
-                fig.savefig("figures/" + e +  "/%s_%d_GML_DATA.png" %(s,trial))
-
-        """
-
-                    
-        fig = plt.figure(figsize = [15,7])
-        ax  = fig.subplots(4,2)
-        fig.suptitle("%s_00%d" % (s,trial))
-        xnum=10000
-        x=np.arange(0,xnum/800,1/800)
-        print(x)
-        print(len(x))
-        ax[0][0].set_title("GML data per down movements", fontsize=14, fontweight="bold")
-        ax[0][1].set_title("GML data per up movements", fontsize=14, fontweight="bold")
+        fig.savefig("figures\%s_%d_acc_forces_dGF.png" %(s,trial))
         
 
         
-        down=True
-        
-        arra=np.full(xnum,0).astype(float)
-        arrL=np.full(xnum,0).astype(float)
-        arrd=np.full(xnum,0).astype(float)
-        arrG=np.full(xnum,0).astype(float)
-
-        arraB=np.full(xnum,0).astype(float)
-        arrLB=np.full(xnum,0).astype(float)
-        arrdB=np.full(xnum,0).astype(float)
-        arrGB=np.full(xnum,0).astype(float)
-        lemin=10000
-        leminb=10000
-        
-
-        for e in range (len(segmentations)-1):
-            ya=np.full(xnum,0).astype(float)
-            yL=np.full(xnum,0).astype(float)
-            yd=np.full(xnum,0).astype(float)
-            yaB=np.full(xnum,0).astype(float)
-            yLB=np.full(xnum,0).astype(float)
-            ydB=np.full(xnum,0).astype(float)
-            yG=np.full(xnum,0).astype(float)
-            yGB=np.full(xnum,0).astype(float)
-
-            le=int(segmentations[e+1]-segmentations[e]) 
-            for i in range (int(segmentations[e+1]-segmentations[e])):
-                if(down):
-                    yaB[i]=accX[(segmentations[e]+i)]
-                    yLB[i]=LF[(segmentations[e]+i)]
-                    yGB[i]=GF[segmentations[e]+i]
-                    ydB[i]=dGF[segmentations[e]+i]
-                else:
-                    ya[i]=accX[segmentations[e]+i]
-                    yL[i]=LF[segmentations[e]+i]
-                    yG[i]=GF[segmentations[e]+i]
-                    yd[i]=dGF[segmentations[e]+i]       
-            if(down):
-                ax[0][0].plot(x[:le], yaB[:le],color=(0.8,0.8,0.8))
-                ax[1][0].plot(x[:le], yLB[:le],color=(0.8,0.8,0.8))
-                ax[2][0].plot(x[:le], yGB[:le],color=(0.8,0.8,0.8))
-                ax[3][0].plot(x[:le], ydB[:le],color=(0.8,0.8,0.8))
-                down=False
-                if(leminb>le):leminb=le
-                for i in range (le):
-                    
-                    arraB[i]+=yaB[i]/10
-                    arrLB[i]+=yLB[i]/10
-                    arrdB[i]+=ydB[i]/10
-                    arrGB[i]+=yGB[i]/10
-            else:
-                ax[0][1].plot(x[:le], ya[:le],color=(0.8,0.8,0.8))
-                ax[1][1].plot(x[:le], yL[:le],color=(0.8,0.8,0.8))
-                ax[2][1].plot(x[:le], yG[:le],color=(0.8,0.8,0.8))
-                ax[3][1].plot(x[:le], yd[:le],color=(0.8,0.8,0.8))
-                down=True
-                if(lemin>le):lemin=le
-                for i in range (le):
-                    
-                    arra[i]+=ya[i]/10
-                    arrL[i]+=yL[i]/10
-                    arrd[i]+=yd[i]/10
-                    arrG[i]+=yG[i]/10
-                    
-            
-                    
-        le=leminb
-        ax[0][0].plot(x[:le], arraB[:le],color=(0,0,0))
-        ax[1][0].plot(x[:le], arrLB[:le],color=(0,0,0))
-        ax[2][0].plot(x[:le], arrGB[:le],color=(0,0,0))
-        ax[3][0].plot(x[:le], arrdB[:le],color=(0,0,0))     
-        
-        le=lemin
-        ax[0][1].plot(x[:le], arra[:le],color=(0,0,0))
-        ax[1][1].plot(x[:le], arrL[:le],color=(0,0,0))
-        ax[2][1].plot(x[:le], arrG[:le],color=(0,0,0))
-        ax[3][1].plot(x[:le], arrd[:le],color=(0,0,0))    
-        
-        ax[0][0].set_xlabel("Time [iteration]", fontsize=13)
-        ax[0][0].set_ylabel("Acceleration [N/s]", fontsize=13)
-
-        
-        ax[1][0].set_xlabel("Time [iteration]", fontsize=13)
-        ax[1][0].set_ylabel("LF[N]", fontsize=13)
-        
-        ax[2][0].set_xlabel("Time [iteration]", fontsize=13)
-        ax[2][0].set_ylabel("GF [N]", fontsize=13)
-        
-        ax[3][0].set_xlabel("Time [iteration]", fontsize=13)
-        ax[3][0].set_ylabel("GF derivative [N/s]", fontsize=13)
-        plt.show()
-        for e in kind:
-            if e  in  name:
-                fig.savefig("figures/" + e +  "/%s_%dMovements.png" %(s,trial))
     
-        
+    
