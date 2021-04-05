@@ -13,10 +13,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 import os
-import coda
-
-from coda import script_coda
-from script_coda import get_segmentations
 
 import glm_data_processing as glm
 import derive as der
@@ -24,15 +20,15 @@ import derive as der
 # Fermeture des figures ouvertes
 plt.close('all')
 
-subjects = ["JulianEB"] #Names of subjects
-ntrials = 2 #Number of trials for each subject
+subjects = ["S01"] #Names of subjects
+ntrials = 1 #Number of trials for each subject
 
-# Double for-loop that runs through all subjects and trials
+# Double for-loop that runs thrgough all subjects and trials
 subject_number=0;
 for s in subjects:
     for trial in range(1,ntrials+1): 
         # Set data path
-        glm_path = "DataGroupe4/%s_00%d.glm" % (s,trial)
+        glm_path = ".\%s_00%d.glm" % (s,trial)
         
         # Import data 
         glm_df = glm.import_data(glm_path)
@@ -89,10 +85,6 @@ for s in subjects:
         #%% Basic plot of the data
         fig = plt.figure(figsize = [15,7])
         ax  = fig.subplots(3,1)
-        
-        segmentations=get_segmentations("DataGroupe4/%s_00%d" % (s,trial))
-        for e in segmentations:
-            ax[0].axvline(time[int(e)])
         
         ax[0].plot(time, accX)
         ax[0].plot(time[ipk],accX[ipk], linestyle='', marker='o', 
