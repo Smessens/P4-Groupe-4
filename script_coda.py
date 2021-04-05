@@ -156,7 +156,7 @@ for s in subjects:
                         if(lemin>le):lemin=le
 
 
-                    
+"""                    
                     
 for exp in expe:
     name = exp+"_"
@@ -219,5 +219,68 @@ for exp in expe:
 
     fig.savefig("figures/" + exp +"_/%s_mean_Coda_Movements.png" %(exp))
         
+"""    
     
+exp="uuzzuzuuzuz"
+fig = plt.figure(figsize = [20,9])
+ax  = fig.subplots(2,8)
+fig.suptitle("All Movements")
+ax[0][0].set_ylabel("Pos X [m]", fontsize=13)
+
+for j in range (len(expe)):
+    name = expe[j]+"_"
+    
+    xnum=10000
+    x=np.arange(0,xnum/800,1/800)
+    le=200 
+                   
+    ax[0][j].set_title(expe[j], fontsize=14, fontweight="bold")
+    ax[0][j].set_ylim([-1,0])
+    ax[1][j].set_ylim([-1,0])
+    
+    
+    
+    arrxB=np.full(xnum,0).astype(float)
+    arrxstdB=np.full(xnum,0).astype(float)
+    for  i in range (600):   
+        y=[row[i] for row in  master[expe[j]+"D"]]
+        y=y[:master[expe[j]+"Dcount"]]
+        arrxB[i]=np.mean(y)
+        #arrxstdB[i]=np.std(y)
+    
+    for col in master[expe[j]+"D"]:
+        if(np.sum(col)!=0):
+            ax[0][j].plot(x[:le], col[:le],color=(0.9,0.9,0.9))
+     
         
+    arrx=np.full(xnum,0).astype(float)
+    arrxstd=np.full(xnum,0).astype(float)
+    for  i in range (600):   
+        y=[row[i] for row in  master[expe[j]]]
+        y=y[:master[expe[j]+"count"]]
+        arrx[i]=np.mean(y)
+       # arrxstd[i]=np.std(y)
+        
+        
+    for col in  master[expe[j]]:
+        if(np.sum(col)!=0):
+            ax[1][j].plot(x[:le], col[:le],color=(0.9,0.9,0.9))
+            
+            
+            
+    ax[0][j].plot(x[:le], arrxB[:le],color=(0,0,0))
+    
+    #ax[0][0].plot(x[:le], arrxstdB[:le],color=(1,0,0))
+    
+    ax[1][j].plot(x[:le], arrx[:le],color=(0,0,0))
+    #ax[0][1].plot(x[:le], arrxstd[:le],color=(1,0,0))
+    
+    
+    ax[0][j].set_xlabel("Time [s]", fontsize=13)
+
+    
+plt.show()
+
+fig.savefig("figures/MasterMovements")
+    
+            
