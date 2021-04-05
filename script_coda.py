@@ -26,10 +26,10 @@ plt.close('all')
 #subjects = ["SophieEB"]#,"SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF"] #Names of subjects
 #subjects = ["JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
 #subjects = ["SimonEH","SimonSECV","SimonSECVR","SimonSEFR","SimonSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","SophieEB","SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF","JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
-subjects =["Julien","Julian","Simon","Sophie"]
+subjects =["Sophie"]#"Julien","Julian","Simon","Sophie"]
 
 kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
-expe=["EB","EBR","EH","EHR","SECV","SECVR","SEF","SEFR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
+expe=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
@@ -50,6 +50,7 @@ for s in subjects:
         for trial in range(1,ntrials+1): 
             if("%s%s_00%d" % (s,exp,trial)!="SimonSECV_002" 
                and "%s%s_00%d" % (s,exp,trial)!="JulienSECV_001"
+               and "%s%s_00%d" % (s,exp,trial)!="JulianSEF_001"
                and "%s%s_00%d" % (s,exp,trial)!="SimonEB_002" ):#coumés
                 # Set data path
                 glm_path = "DataGroupe4/%s%s_00%d.glm" % (s,exp,trial)
@@ -103,6 +104,7 @@ for s in subjects:
                 vel = tool.derive(pos,200,axis=1)
             
                 
+
                 #%% Basic plot of the data
                 xnum=10000
                 x=np.arange(0,xnum/800,1/800)
@@ -155,9 +157,11 @@ for s in subjects:
                         down=True
                         if(lemin>le):lemin=le
 
+                            
 
-"""                    
+
                     
+"""                    
 for exp in expe:
     name = exp+"_"
 
@@ -219,12 +223,11 @@ for exp in expe:
 
     fig.savefig("figures/" + exp +"_/%s_mean_Coda_Movements.png" %(exp))
         
+  
 """    
-    
-exp="uuzzuzuuzuz"
 fig = plt.figure(figsize = [20,9])
 ax  = fig.subplots(2,8)
-fig.suptitle("All Movements")
+fig.suptitle("All Movements Sophie")
 ax[0][0].set_ylabel("Pos X [m]", fontsize=13)
 
 for j in range (len(expe)):
