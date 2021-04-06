@@ -23,30 +23,30 @@ plt.close('all')
 #subjects = ["JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF"] #Names of subjects
 #subjects = ["SimonEH","SimonSECV","SimonSECVR","SimonSEFR","SimonSEF"] #Names of subjects
 #Notes  not existant: EB2, EHR
-subjects =["Julien","Julian","Simon","Sophie"]
+subjects =["Julian"]
 
 kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
 expe=["EB","EBR","EH","EHR","SECV","SECVR","SEF","SEFR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
-masterG={"EB":np.zeros((80,600)),"EBcount":0,"EBD":np.zeros((80,600)),"EBDcount":0,
-        "EBR":np.zeros((80,600)),"EBRcount":0,"EBRD":np.zeros((80,600)),"EBRDcount":0,
-        "EH":np.zeros((80,600)),"EHcount":0,"EHD":np.zeros((80,600)),"EHDcount":0,
-        "EHR":np.zeros((80,600)),"EHRcount":0,"EHRD":np.zeros((80,600)),"EHRDcount":0,
-        "SECV":np.zeros((80,600)),"SECVcount":0,"SECVD":np.zeros((80,600)),"SECVDcount":0,
-        "SECVR":np.zeros((80,600)),"SECVRcount":0,"SECVRD":np.zeros((80,600)),"SECVRDcount":0,
-        "SEF":np.zeros((80,600)),"SEFcount":0,"SEFD":np.zeros((80,600)),"SEFDcount":0,
-        "SEFR":np.zeros((80,600)),"SEFRcount":0,"SEFRD":np.zeros((80,600)),"SEFRDcount":0}
+masterG={"EB":np.zeros((80,4800)),"EBcount":0,"EBD":np.zeros((80,4800)),"EBDcount":0,
+        "EBR":np.zeros((80,4800)),"EBRcount":0,"EBRD":np.zeros((80,4800)),"EBRDcount":0,
+        "EH":np.zeros((80,4800)),"EHcount":0,"EHD":np.zeros((80,4800)),"EHDcount":0,
+        "EHR":np.zeros((80,4800)),"EHRcount":0,"EHRD":np.zeros((80,4800)),"EHRDcount":0,
+        "SECV":np.zeros((80,4800)),"SECVcount":0,"SECVD":np.zeros((80,4800)),"SECVDcount":0,
+        "SECVR":np.zeros((80,4800)),"SECVRcount":0,"SECVRD":np.zeros((80,4800)),"SECVRDcount":0,
+        "SEF":np.zeros((80,4800)),"SEFcount":0,"SEFD":np.zeros((80,4800)),"SEFDcount":0,
+        "SEFR":np.zeros((80,4800)),"SEFRcount":0,"SEFRD":np.zeros((80,4800)),"SEFRDcount":0}
 
-masterL={"EB":np.zeros((80,600)),"EBcount":0,"EBD":np.zeros((80,600)),"EBDcount":0,
-        "EBR":np.zeros((80,600)),"EBRcount":0,"EBRD":np.zeros((80,600)),"EBRDcount":0,
-        "EH":np.zeros((80,600)),"EHcount":0,"EHD":np.zeros((80,600)),"EHDcount":0,
-        "EHR":np.zeros((80,600)),"EHRcount":0,"EHRD":np.zeros((80,600)),"EHRDcount":0,
-        "SECV":np.zeros((80,600)),"SECVcount":0,"SECVD":np.zeros((80,600)),"SECVDcount":0,
-        "SECVR":np.zeros((80,600)),"SECVRcount":0,"SECVRD":np.zeros((80,600)),"SECVRDcount":0,
-        "SEF":np.zeros((80,600)),"SEFcount":0,"SEFD":np.zeros((80,600)),"SEFDcount":0,
-        "SEFR":np.zeros((80,600)),"SEFRcount":0,"SEFRD":np.zeros((80,600)),"SEFRDcount":0}
+masterL={"EB":np.zeros((80,4800)),"EBcount":0,"EBD":np.zeros((80,4800)),"EBDcount":0,
+        "EBR":np.zeros((80,4800)),"EBRcount":0,"EBRD":np.zeros((80,4800)),"EBRDcount":0,
+        "EH":np.zeros((80,4800)),"EHcount":0,"EHD":np.zeros((80,4800)),"EHDcount":0,
+        "EHR":np.zeros((80,4800)),"EHRcount":0,"EHRD":np.zeros((80,4800)),"EHRDcount":0,
+        "SECV":np.zeros((80,4800)),"SECVcount":0,"SECVD":np.zeros((80,4800)),"SECVDcount":0,
+        "SECVR":np.zeros((80,4800)),"SECVRcount":0,"SECVRD":np.zeros((80,4800)),"SECVRDcount":0,
+        "SEF":np.zeros((80,4800)),"SEFcount":0,"SEFD":np.zeros((80,4800)),"SEFDcount":0,
+        "SEFR":np.zeros((80,4800)),"SEFRcount":0,"SEFRD":np.zeros((80,4800)),"SEFRDcount":0}
 
 
 ntrials = 2 #Number of trials for each subject
@@ -174,19 +174,19 @@ for s in subjects:
                 le=int(segmentations[e+1]-segmentations[e]) 
                 for i in range (int(segmentations[e+1]-segmentations[e])):
                     if(down):
-                        yLB[i]=LF[0][(segmentations[e]+i)]
-                        yGB[i]=GF[0][(segmentations[e]+i)]
+                        yLB[i]=LF[(segmentations[e]+i)]
+                        yGB[i]=GF[(segmentations[e]+i)]
 
                     else:
-                        yL[i]=LF[0][(segmentations[e]+i)]
-                        yG[i]=GF[0][(segmentations[e]+i)]
+                        yL[i]=LF[(segmentations[e]+i)]
+                        yG[i]=GF[(segmentations[e]+i)]
 
     
                 if(down):
-                    masterL[s+"D"][masterL[s+"Dcount"]]=yLB[:600]
-                    masterL[s+"Dcount"]+=1
-                    masterG[s+"D"][masterG[s+"Dcount"]]=yGB[:600]
-                    masterG[s+"Dcount"]+=1
+                    masterL[exp+"D"][masterL[exp+"Dcount"]]=yLB[:4800]
+                    masterL[exp+"Dcount"]+=1
+                    masterG[exp+"D"][masterG[exp+"Dcount"]]=yGB[:4800]
+                    masterG[exp+"Dcount"]+=1
                     
                     down=False
 
@@ -196,12 +196,74 @@ for s in subjects:
     
                         
                 else:
-                    masterL[s][masterL[s+"count"]]=yL[:600]
-                    masterL[s+"count"]+=1
-                    masterG[s][masterG[s+"count"]]=yG[:600]
-                    masterG[s+"count"]+=1
+                    masterL[exp][masterL[exp+"count"]]=yL[:4800]
+                    masterL[exp+"count"]+=1
+                    masterG[exp][masterG[exp+"count"]]=yG[:4800]
+                    masterG[exp+"count"]+=1
                     
                     down=True
                     if(lemin>le):lemin=le
 
+
+
+
+fig = plt.figure(figsize = [20,9])
+ax  = fig.subplots(1,2)
+fig.suptitle("Comparaison des différents modes pour Julian​ GF")
+    #color={"Simon":"green","Julien":"red","Julian":"blue","Sophie":"purple"}
+color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"purple","EHR":"yellow","EBR":"pink"}
+for exp in (expe):
+    
+    xnum=10000
+    x=np.arange(0,xnum/800,1/800)
+    le=200*4 
+                   
+   # ax[0].set_title(, fontsize=14, fontweight="bold")
+
+    
+    
+    
+    arrLB=np.full(xnum,0).astype(float)
+    arrGB=np.full(xnum,0).astype(float)
+    
+    for  i in range (4800):   
+        y=[row[i] for row in  masterL[exp+"D"]]
+        y=y[:masterL[exp+"Dcount"]]
+        arrLB[i]=np.mean(y)
+        
+        y=[row[i] for row in  masterG[exp+"D"]]
+        y=y[:masterG[exp+"Dcount"]]
+        arrGB[i]=np.mean(y)
+       
+    arrL=np.full(xnum,0).astype(float)
+    arrG=np.full(xnum,0).astype(float)
+    
+    for  i in range (4800):   
+        y=[row[i] for row in  masterL[exp]]
+        y=y[:masterL[exp+"count"]]
+        arrL[i]=np.mean(y)
+       
+        y=[row[i] for row in  masterG[exp]]
+        y=y[:masterG[exp+"count"]]
+        arrG[i]=np.mean(y)
+       
             
+    ax[0].plot(x[:le], arrGB[:le],color=color[exp],label=exp)
+
+    
+    ax[1].plot(x[:le], arrG[:le],color=color[exp],label=exp)
+    
+    ax[0].set_xlabel("Time [s]", fontsize=13)
+
+
+ax[0].set_ylim([4,18])
+ax[1].set_ylim([4,18])
+
+ax[0].set_title("Mouvement vers le bas", fontsize=11, fontweight="bold")
+ax[0].legend()
+
+ax[1].set_title("Mouvement vers le haut", fontsize=11, fontweight="bold")
+ax[1].legend()
+
+
+plt.show()
