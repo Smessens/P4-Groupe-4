@@ -23,8 +23,8 @@ plt.close('all')
 mast=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 fig = plt.figure(figsize = [20,9])
-ax  = fig.subplots(2,8)
-fig.suptitle("Moyenne position en x tout sujets")
+ax  = fig.subplots(2)
+fig.suptitle("Moyenne position en x Julien")
 
 for m in range (len( mast)):
      
@@ -34,7 +34,7 @@ for m in range (len( mast)):
     #subjects = ["SophieEB"]#,"SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF"] #Names of subjects
     #subjects = ["JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
     #subjects = ["SimonEH","SimonSECV","SimonSECVR","SimonSEFR","SimonSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","JULEB","JULEBR","JULEH","JULEHR","JulSECV","julSECVR","julSEFR","julSEF","SophieEB","SophieEBR","SophieEH","SophieEHR","SophieSECV","SophieSECVR","SophieSEFR","SophieSEF","JulianEB","JulianEBR","JulianEH","JulianEHR","JulianSECV","JulianSECVR","JulianSEFR","JulianSEF"] #Names of subjects
-    subjects =["Julien","Julian","Simon","Sophie"]
+    subjects =["Julien"]#"Julien","Julian","Simon","Sophie"]
     
     kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
     expe=[mast[m]]#"SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
@@ -162,80 +162,14 @@ for m in range (len( mast)):
                             down=True
                             if(lemin>le):lemin=le
     
-                                
-    
-    
-                        
-    """                    
-    for exp in expe:
-        name = exp+"_"
-    
-        fig = plt.figure(figsize = [15,7])
-        ax  = fig.subplots(2)
-        fig.suptitle(exp)
-        xnum=10000
-        x=np.arange(0,xnum/800,1/800)
-        le=200                    
-        ax[0].set_title("", fontsize=14, fontweight="bold")
-        ax[1].set_title("", fontsize=14, fontweight="bold")
-        ax[0].set_ylim([-1,0])
-        ax[1].set_ylim([-1,0])
-    
-        
-            
-        arrxB=np.full(xnum,0).astype(float)
-        arrxstdB=np.full(xnum,0).astype(float)
-        for  i in range (600):   
-            y=[row[i] for row in  master[exp+"D"]]
-            y=y[:master[exp+"Dcount"]]
-            arrxB[i]=np.mean(y)
-            #arrxstdB[i]=np.std(y)
-        
-        for col in master[exp+"D"]:
-            if(np.sum(col)!=0):
-                ax[0].plot(x[:le], col[:le],color=(0.9,0.9,0.9))
-         
-            
-        arrx=np.full(xnum,0).astype(float)
-        arrxstd=np.full(xnum,0).astype(float)
-        for  i in range (600):   
-            y=[row[i] for row in  master[exp]]
-            y=y[:master[exp+"count"]]
-            arrx[i]=np.mean(y)
-           # arrxstd[i]=np.std(y)
-            
-            
-        for col in  master[exp]:
-            if(np.sum(col)!=0):
-                ax[1].plot(x[:le], col[:le],color=(0.9,0.9,0.9))
-                
-                
-                
-        ax[0].plot(x[:le], arrxB[:le],color=(0,0,0))
-    
-        #ax[0][0].plot(x[:le], arrxstdB[:le],color=(1,0,0))
-        
-        ax[1].plot(x[:le], arrx[:le],color=(0,0,0))
-        #ax[0][1].plot(x[:le], arrxstd[:le],color=(1,0,0))
-        
-        
-        ax[0].set_xlabel("Time [s]", fontsize=13)
-        ax[0].set_ylabel("Pos X [m]", fontsize=13)
-        
-        
-        
-        plt.show()
-    
-        fig.savefig("figures/" + exp +"_/%s_mean_Coda_Movements.png" %(exp))
-            
-      
-    """    
+
 
     
-    ax[0][0].set_ylabel("Pos X [m]", fontsize=13)
+    ax[0].set_ylabel("Pos X [m]", fontsize=13)
     
     
-    color={"Simon":"green","Julien":"red","Julian":"blue","Sophie":"purple"}
+    #color={"Simon":"green","Julien":"red","Julian":"blue","Sophie":"purple"}
+    color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"purple","EHR":"yellow","EBR":"pink"}
     for s in (subjects):
         
         xnum=10000
@@ -243,8 +177,8 @@ for m in range (len( mast)):
         le=200 
                        
        # ax[0].set_title(, fontsize=14, fontweight="bold")
-        ax[0][m].set_ylim([-1,0])
-        ax[1][m].set_ylim([-1,0])
+        ax[0].set_ylim([-1,0])
+        ax[1].set_ylim([-1,0])
         
         
         
@@ -267,18 +201,18 @@ for m in range (len( mast)):
            
        
                 
-        ax[0][m].plot(x[:le], arrxB[:le],color=color[s],label=s)
+        ax[0].plot(x[:le], arrxB[:le],color=color[mast[m]],label=mast[m])
 
         
-        ax[1][m].plot(x[:le], arrx[:le],color=color[s],label=s)
+        ax[1].plot(x[:le], arrx[:le],color=color[mast[m]],label=mast[m])
         
-        ax[0][m].set_xlabel("Time [s]", fontsize=13)
+        ax[0].set_xlabel("Time [s]", fontsize=13)
     
-    ax[0][m].set_title("Mouvement vers le bas", fontsize=11, fontweight="bold")
-    ax[0][m].legend()
+    ax[0].set_title("Mouvement vers le bas", fontsize=11, fontweight="bold")
+    ax[0].legend()
     
-    ax[1][m].set_title("Mouvement vers le haut", fontsize=11, fontweight="bold")
-    ax[1][m].legend()
+    ax[1].set_title("Mouvement vers le haut", fontsize=11, fontweight="bold")
+    ax[1].legend()
 
 
 plt.show()
