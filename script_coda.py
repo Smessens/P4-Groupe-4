@@ -20,10 +20,10 @@ import derive as der
 # Fermeture des figures ouvertes
 plt.close('all')
 
-subjects =["Julien","Julian","Simon","Sophie"]
+subjects =["Julian"]#"Julien","Julian","Simon","Sophie"]
 
 kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
-expe=["EB","EBR"]#,"EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
+expe=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
@@ -154,15 +154,13 @@ for s in subjects:
                             
 
 
-    
-       
-
+                    
+   
 fig = plt.figure(figsize = [20,9])
-ax  = fig.subplots(1,2)
-fig.suptitle("Boxplots comparée pour " + expe[0] + " et " + expe[1] , fontsize=20)
+ax  = fig.subplots(2)
+fig.suptitle("Boxplots")
 data=np.zeros((len(expe),3))
 dataD=np.zeros((len(expe),3))
-color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"purple","EHR":"yellow","EBR":"pink"}
 
 for j in range (len(expe)):
     name = expe[j]+"_"
@@ -192,8 +190,9 @@ for j in range (len(expe)):
 
     data[j]=[np.mean(arr),np.max(arr),np.min(arr)]
 
-
-
+    
+    
+    
 ax[0].set_ylabel("Amplitude [cm]", fontsize=13)
 ax[1].set_ylabel("Amplitude [cm]", fontsize=13)
 ax[0].set_ylim(0,0.67)
@@ -214,7 +213,9 @@ b1 = ax[1].boxplot(np.transpose(data),
     
 
 # fill with colors
-colors = [ color[expe[0]] , color[expe[1]] ]
+color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
+
+colors = [color[i] for i in expe]
 
 for bplot in (b0, b1):
     for patch, color in zip(bplot['boxes'], colors):
@@ -223,9 +224,11 @@ for bplot in (b0, b1):
 # adding horizontal grid lines
 for ax in [ax[0], ax[1]]:
     ax.yaxis.grid(True)
-    ax.set_xlabel('Three separate samples')
-    ax.set_ylabel('Observed values')
+    ax.set_xlabel('Mode')
+    ax.set_ylabel('Amplitudes [cm]')
 
+plt.show()
+    
 plt.show()
 
     
