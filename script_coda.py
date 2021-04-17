@@ -20,10 +20,10 @@ import derive as der
 # Fermeture des figures ouvertes
 plt.close('all')
 
-subjects =["Julian"]#"Julien","Julian","Simon","Sophie"]
+subjects =["Julien","Julian","Simon","Sophie"]
 
 kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
-expe=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
+expe=["EB","EBR"]#,"EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
@@ -154,13 +154,15 @@ for s in subjects:
                             
 
 
-                    
-   
+    
+       
+
 fig = plt.figure(figsize = [20,9])
-ax  = fig.subplots(2)
-fig.suptitle("Boxplots")
+ax  = fig.subplots(1,2)
+fig.suptitle("Boxplots comparée pour " + expe[0] + " et " + expe[1] , fontsize=20)
 data=np.zeros((len(expe),3))
 dataD=np.zeros((len(expe),3))
+color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"purple","EHR":"yellow","EBR":"pink"}
 
 for j in range (len(expe)):
     name = expe[j]+"_"
@@ -190,18 +192,40 @@ for j in range (len(expe)):
 
     data[j]=[np.mean(arr),np.max(arr),np.min(arr)]
 
-    
-    
+
+
 ax[0].set_ylabel("Amplitude [cm]", fontsize=13)
 ax[1].set_ylabel("Amplitude [cm]", fontsize=13)
-
+ax[0].set_ylim(0,0.67)
+ax[1].set_ylim(0,0.67)
 ax[0].set_title(" Mouvement bas")
 ax[1].set_title(" Mouvement Haut")
 
-ax[0].boxplot(np.transpose(dataD),labels=expe)
-ax[1].boxplot(np.transpose(data), labels=expe)
 
+b0 = ax[0].boxplot(np.transpose(dataD),
+                   vert=True,  # vertical box alignment
+                   patch_artist=True,  # fill with color
+                   labels=expe)
+
+b1 = ax[1].boxplot(np.transpose(data),
+                   vert=True,  # vertical box alignment
+                   patch_artist=True,  # fill with color
+                   labels=expe)
     
+
+# fill with colors
+colors = [ color[expe[0]] , color[expe[1]] ]
+
+for bplot in (b0, b1):
+    for patch, color in zip(bplot['boxes'], colors):
+        patch.set_facecolor(color)
+
+# adding horizontal grid lines
+for ax in [ax[0], ax[1]]:
+    ax.yaxis.grid(True)
+    ax.set_xlabel('Three separate samples')
+    ax.set_ylabel('Observed values')
+
 plt.show()
 
     
