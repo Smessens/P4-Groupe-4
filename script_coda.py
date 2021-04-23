@@ -22,8 +22,8 @@ plt.close('all')
 
 subjects =["Julian"]#"Julien","Julian","Simon","Sophie"]
 
-kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
-expe=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
+kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]#"EH","EB","EHR","EBR"]#
+expe=["EB","EBR","EH","EHR"]#"SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
@@ -156,11 +156,13 @@ for s in subjects:
 
                     
    
-fig = plt.figure(figsize = [20,9])
-ax  = fig.subplots(2)
-fig.suptitle("Boxplots")
+fig = plt.figure(figsize = [8,8])
+ax  = fig.subplots(1,1)
+fig.suptitle("")
 data=np.zeros((len(expe),3))
 dataD=np.zeros((len(expe),3))
+
+
 
 for j in range (len(expe)):
     name = expe[j]+"_"
@@ -178,8 +180,8 @@ for j in range (len(expe)):
     
         arr[i]=abs(master[expe[j]+"D"][i][0]-master[expe[j]+"D"][i][le])
 
+   # arr= arr-np.min(arr)
     dataD[j]=[np.mean(arr),np.max(arr),np.min(arr)]
-
 
 
     arr=np.full(master[expe[j]+"count"],0).astype(float)
@@ -187,49 +189,47 @@ for j in range (len(expe)):
     for  i in range (master[expe[j]+"count"]): 
     
         arr[i]=abs(master[expe[j]][i][0]-master[expe[j]][i][le])
-
+  #  arr= arr-np.min(arr)
     data[j]=[np.mean(arr),np.max(arr),np.min(arr)]
 
     
     
     
-ax[0].set_ylabel("Amplitude [cm]", fontsize=13)
-ax[1].set_ylabel("Amplitude [cm]", fontsize=13)
-ax[0].set_ylim(0,0.67)
-ax[1].set_ylim(0,0.67)
-ax[0].set_title(" Mouvement bas")
-ax[1].set_title(" Mouvement Haut")
+ax.set_ylabel("Amplitude [cm]", fontsize=13)
+ax.set_ylim(0,0.65)
+ax.set_title("Répartition de l'ampltude pour les conditions élastique")
+ax.axhline(y=0.45, color='b', linestyle=':')
+ax.grid( linestyle=':', linewidth=2)
 
-
-b0 = ax[0].boxplot(np.transpose(dataD),
+b0 = ax.boxplot(np.transpose(dataD),
                    vert=True,  # vertical box alignment
                    patch_artist=True,  # fill with color
                    labels=expe)
 
-b1 = ax[1].boxplot(np.transpose(data),
-                   vert=True,  # vertical box alignment
-                   patch_artist=True,  # fill with color
-                   labels=expe)
-    
 
 # fill with colors
-color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
+color={"SECV":"grey","SEF":"lightpink","EH":"red","EB":"gold","SECVR":"lightgreen","SEFR":"turquoise","EHR":"mediumpurple","EBR":"deeppink"}
+#color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
+#color={"SECV":"green","SEF":"green","EH":"green","EB":"green","SECVR":"blue","SEFR":"blue","EHR":"blue","EBR":"blue"}
+#color={"SECV":"green","SEF":"green","EH":"green","EB":"blue","SECVR":"blue","SEFR":"blue","EHR":"green","EBR":"blue"}
 
 colors = [color[i] for i in expe]
 
-for bplot in (b0, b1):
+for bplot in ([b0]):
     for patch, color in zip(bplot['boxes'], colors):
         patch.set_facecolor(color)
 
 # adding horizontal grid lines
-for ax in [ax[0], ax[1]]:
+for ax in [ax]:
     ax.yaxis.grid(True)
-    ax.set_xlabel('Mode')
+    ax.set_xlabel('Conditions')
     ax.set_ylabel('Amplitudes [cm]')
 
 plt.show()
+
+print(expe)
+
     
-plt.show()
 
     
             
