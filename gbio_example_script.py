@@ -209,9 +209,8 @@ for s in subjects:
 
 fig = plt.figure(figsize = [20,9])
 ax  = fig.subplots(1,2)
-fig.suptitle("Comparaison des différents modes pour Julian​ LF")
     #color={"Simon":"green","Julien":"red","Julian":"blue","Sophie":"purple"}
-color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"purple","EHR":"yellow","EBR":"pink"}
+color={"SECV":"grey","SEF":"lightpink","EH":"red","EB":"gold","SECVR":"lightgreen","SEFR":"turquoise","EHR":"mediumpurple","EBR":"deeppink"}
 for exp in (expe):
     
     xnum=10000
@@ -246,26 +245,29 @@ for exp in (expe):
         y=[row[i] for row in  masterG[exp]]
         y=y[:masterG[exp+"count"]]
         arrG[i]=np.mean(y)
-       
-    if(exp.find("R")==-1):
-        ax[0].plot(x[:le], arrLB[:le],color=color[exp],label=exp)
-        ax[1].plot(x[:le], arrL[:le],color=color[exp],label=exp)
-    else:
-        ax[0].plot(x[:le], arrLB[:le],color=color[exp],label=exp,linestyle="dotted")
-        ax[1].plot(x[:le], arrL[:le],color=color[exp],label=exp,linestyle="dotted")
-    
-    
-    ax[0].set_xlabel("Time [s]", fontsize=13)
 
 
-ax[0].set_ylim([1,5])
-ax[1].set_ylim([1,5])
+    if(exp.find("R")==-1): 
+        ax[0].plot(x[:le], arrGB[:le],color=color[exp],label=exp) 
+        ax[1].plot(x[:le], arrG[:le],color=color[exp],label=exp) 
+    else: 
+        ax[0].plot(x[:le], arrGB[:le],"o",color=color[exp],label=exp) 
+        ax[1].plot(x[:le], arrG[:le],"o",color=color[exp],label=exp) 
+     
+    
+    
+ax[0].set_ylabel("Force [N]", fontsize=13)
+ax[1].set_ylabel("Force [N]", fontsize=13)
+ax[0].set_xlabel("Time [s]", fontsize=13)
+ax[1].set_xlabel("Time [s]", fontsize=13)
+
+
+ax[0].set_ylim([0,18])
+ax[1].set_ylim([0,18])
 
 ax[0].set_title("Mouvement vers le bas", fontsize=11, fontweight="bold")
-ax[0].legend()
 
 ax[1].set_title("Mouvement vers le haut", fontsize=11, fontweight="bold")
-ax[1].legend()
 
 
 plt.show()
