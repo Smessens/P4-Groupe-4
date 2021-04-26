@@ -20,21 +20,21 @@ import derive as der
 # Fermeture des figures ouvertes
 plt.close('all')
 
-subjects =["Julian"]
+subjects =["Julian","Sophie"]
 
-kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]#"EH","EB","EHR","EBR"]#
-expe=["SECV","SEF","EH","EB","SECVR","SEFR","EHR","EBR"]#,"EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
+kind=["EB_","EH_","SECV_","SEF_","EBR_","EHR_","SECVR_","SEFR_"]
+expe=["EB","EH","SECV","SEF","EBR","EHR","SECVR","SEFR"]
 
 ntrials = 2 #Number of trials for each subject
 
-master={"EB":np.zeros((400,600)),"EBcount":0,"EBD":np.zeros((400,600)),"EBDcount":0,
-        "EBR":np.zeros((400,600)),"EBRcount":0,"EBRD":np.zeros((400,600)),"EBRDcount":0,
-        "EH":np.zeros((400,600)),"EHcount":0,"EHD":np.zeros((400,600)),"EHDcount":0,
-        "EHR":np.zeros((400,600)),"EHRcount":0,"EHRD":np.zeros((400,600)),"EHRDcount":0,
-        "SECV":np.zeros((400,600)),"SECVcount":0,"SECVD":np.zeros((400,600)),"SECVDcount":0,
-        "SECVR":np.zeros((400,600)),"SECVRcount":0,"SECVRD":np.zeros((400,600)),"SECVRDcount":0,
-        "SEF":np.zeros((400,600)),"SEFcount":0,"SEFD":np.zeros((400,600)),"SEFDcount":0,
-        "SEFR":np.zeros((400,600)),"SEFRcount":0,"SEFRD":np.zeros((400,600)),"SEFRDcount":0}
+master={"EB":np.zeros((160,600)),"EBcount":0,"EBD":np.zeros((160,600)),"EBDcount":0,
+        "EBR":np.zeros((160,600)),"EBRcount":0,"EBRD":np.zeros((160,600)),"EBRDcount":0,
+        "EH":np.zeros((160,600)),"EHcount":0,"EHD":np.zeros((160,600)),"EHDcount":0,
+        "EHR":np.zeros((160,600)),"EHRcount":0,"EHRD":np.zeros((160,600)),"EHRDcount":0,
+        "SECV":np.zeros((160,600)),"SECVcount":0,"SECVD":np.zeros((160,600)),"SECVDcount":0,
+        "SECVR":np.zeros((160,600)),"SECVRcount":0,"SECVRD":np.zeros((160,600)),"SECVRDcount":0,
+        "SEF":np.zeros((160,600)),"SEFcount":0,"SEFD":np.zeros((160,600)),"SEFDcount":0,
+        "SEFR":np.zeros((160,600)),"SEFRcount":0,"SEFRD":np.zeros((160,600)),"SEFRDcount":0}
 
 
 # Double for-loop that runs thrgough all subjects and trials
@@ -42,7 +42,11 @@ subject_number=0;
 for s in subjects:
     for exp in expe:
         for trial in range(1,ntrials+1): 
-
+            if("%s%s_00%d" % (s,exp,trial)!="SimonSECV_002" 
+               and "%s%s_00%d" % (s,exp,trial)!="JulienSECV_001"
+               and "%s%s_00%d" % (s,exp,trial)!="JulianSEF_001"
+               and "%s%s_00%d" % (s,exp,trial)!="SimonEB_002" ):#coumés
+                # Set data path
                 glm_path = "DataGroupe4/%s%s_00%d.glm" % (s,exp,trial)
                 coda_path = "Groupe_4_codas/%s%s_000%d.txt" % (s,exp,trial)
                 name ="%s%s_00%d.glm" % (s,exp,trial)
@@ -152,56 +156,92 @@ for s in subjects:
 
                     
    
-fig = plt.figure(figsize = [8,8])
-ax  = fig.subplots(1,1)
-fig.suptitle("")
-data=np.zeros((18*len(subjects),len(expe)))
+fig = plt.figure(figsize = [9,9])
+ax  = fig.subplots(1)
+
+data=np.zeros((2,3))
+
+#exp1=["EH","EHR"]
+#exp2=["EB","EBR"]
+
+#exp1=["EB","EHR"]
+#exp2=["EH","EBR"]
+
+exp1=["EH","EB","SECV","SEF"]
+exp2=["EHR","EBR","SECVR","SEFR"]
 
 
 
-for j in range (len(expe)):
-    name = expe[j]+"_"
+e1=np.array([])
+
+for j in range (len(exp1)):
+    
+    name = exp1[j]+"_"
     
     xnum=10000
     x=np.arange(0,xnum/800,1/800)
     le=200 
                   
-    arr=np.full(master[expe[j]+"count"],0).astype(float)
-        #amplitude
-    for  i in range (min(master[expe[j]+"count"],18*len(subjects))):     
-        data[i][j]=abs(master[expe[j]][i][0]-master[expe[j]][i][le])
+    arr=np.full(master[exp1[j]+"Dcount"],0).astype(float)
+  
+    
+
+    #amplitude
+    for  i in range (master[exp1[j]+"Dcount"]): 
+    
+        arr[i]=abs(master[exp1[j]+"D"][i][0]-master[exp1[j]+"D"][i][le])
         
-data[:][:]-=np.min(data[:][:])
-print(len(data[:][:]))   
+    e1=np.append(e1,arr)
+ 
+data[0]=[np.mean(e1),np.max(e1),np.min(e1)]
 
 
+e2=np.array([])
+
+for j in range (len(exp2)):
+    
+    name = exp2[j]+"_"
+    
+    xnum=10000
+    x=np.arange(0,xnum/800,1/800)
+    le=200 
+                  
+    arr=np.full(master[exp2[j]+"Dcount"],0).astype(float)
+  
+    
+
+    #amplitude
+    for  i in range (master[exp2[j]+"Dcount"]): 
+    
+        arr[i]=abs(master[exp2[j]+"D"][i][0]-master[exp2[j]+"D"][i][le])
+        
+    e2=np.append(e2,arr)
+    
+    
+
+print(np.mean(e1),np.mean(e2))
+data[1]=[np.mean(e2),np.max(e2),np.min(e2)]
+
+    
+   
+    
+    
+ax.set_ylabel("Amplitude [m]", fontsize=13)
+ax.set_ylim(0,0.75)
 
 
+b0 = ax.boxplot(np.transpose(data),
+                   vert=True,  # vertical box alignment
+                   patch_artist=True,
+                   labels=["Sujet droit","Sujet retourné"])
 
-
-ax.set_ylabel("Amplitude [cm]", fontsize=13)
-ax.set_ylim(0,0.68)
-ax.set_title("Répartition de l'amplitude pour les conditions élastique")
-ax.axhline(y=0.45, color='b', linestyle=':')
-ax.grid( linestyle=':', linewidth=2)
-
-
-ax.violinplot(data)
-
+    
 
 # fill with colors
-color={"SECV":"grey","SEF":"lightpink","EH":"red","EB":"gold","SECVR":"lightgreen","SEFR":"turquoise","EHR":"mediumpurple","EBR":"deeppink"}
-#color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
-#color={"SECV":"green","SEF":"green","EH":"green","EB":"green","SECVR":"blue","SEFR":"blue","EHR":"blue","EBR":"blue"}
-#color={"SECV":"green","SEF":"green","EH":"green","EB":"blue","SECVR":"blue","SEFR":"blue","EHR":"green","EBR":"blue"}
-"""
-
-b0 = ax.boxplot(np.transpose(dataD),
-                   vert=True,  # vertical box alignment
-                   patch_artist=True,  # fill with color
-                   labels=expe)
+color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
 
 colors = [color[i] for i in expe]
+ax.axhline(y=0.45, color='b', linestyle=':')
 
 for bplot in ([b0]):
     for patch, color in zip(bplot['boxes'], colors):
@@ -210,12 +250,12 @@ for bplot in ([b0]):
 # adding horizontal grid lines
 for ax in [ax]:
     ax.yaxis.grid(True)
-    ax.set_xlabel('Conditions')
-    ax.set_ylabel('Amplitudes [cm]')
-"""
+    ax.set_xlabel('condition')
+    ax.set_ylabel('Amplitudes [m]')
+
+[plt.axvline(x, color = 'r', linestyle='--') for x in [1.5]]
+
 plt.show()
-
-
     
 
     

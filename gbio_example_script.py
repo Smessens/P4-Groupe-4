@@ -248,11 +248,11 @@ for exp in (expe):
 
 
     if(exp.find("R")==-1): 
-        ax[0].plot(x[:le], arrGB[:le],color=color[exp],label=exp) 
-        ax[1].plot(x[:le], arrG[:le],color=color[exp],label=exp) 
+        ax[0].plot(x[:le], arrLB[:le],"o",color=color[exp],label=exp) 
+        ax[1].plot(x[:le], arrL[:le],"o",color=color[exp],label=exp) 
     else: 
-        ax[0].plot(x[:le], arrGB[:le],"o",color=color[exp],label=exp) 
-        ax[1].plot(x[:le], arrG[:le],"o",color=color[exp],label=exp) 
+        ax[0].plot(x[:le], arrLB[:le],color=color[exp],label=exp) 
+        ax[1].plot(x[:le], arrL[:le],color=color[exp],label=exp) 
      
     
     
@@ -262,8 +262,8 @@ ax[0].set_xlabel("Time [s]", fontsize=13)
 ax[1].set_xlabel("Time [s]", fontsize=13)
 
 
-ax[0].set_ylim([0,18])
-ax[1].set_ylim([0,18])
+ax[0].set_ylim([0,5])
+ax[1].set_ylim([0,5])
 
 ax[0].set_title("Mouvement vers le bas", fontsize=11, fontweight="bold")
 
