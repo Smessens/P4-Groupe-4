@@ -164,12 +164,15 @@ data=np.zeros((2,3))
 #exp1=["EH","EHR"]
 #exp2=["EB","EBR"]
 
-#exp1=["EB","EHR"]
-#exp2=["EH","EBR"]
+exp1=["EB","EHR"]
+exp2=["EH","EBR"]
 
-exp1=["EH","EB","SECV","SEF"]
-exp2=["EHR","EBR","SECVR","SEFR"]
+#exp1=["EH","EB","SECV","SEF"]
+#exp2=["EHR","EBR","SECVR","SEFR"]
 
+
+#exp1=["SECV","SECVR"]
+#exp2=["SEF","SEFR"]
 
 
 e1=np.array([])
@@ -232,15 +235,15 @@ ax.set_ylim(0,0.75)
 
 b0 = ax.boxplot(np.transpose(data),
                    vert=True,  # vertical box alignment
-                   patch_artist=True,
-                   labels=["Sujet droit","Sujet retourné"])
+                   patch_artist=True)
 
     
 
 # fill with colors
 color={"SECV":"green","SEF":"red","EH":"blue","EB":"purple","SECVR":"black","SEFR":"orange","EHR":"yellow","EBR":"pink"}
 
-colors = [color[i] for i in expe]
+colors = ["darksalmon","darkseagreen"]
+
 ax.axhline(y=0.45, color='b', linestyle=':')
 
 for bplot in ([b0]):
